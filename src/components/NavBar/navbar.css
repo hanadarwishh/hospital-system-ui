@@ -1,0 +1,51 @@
+/* navbar.css */
+
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/public/assets/fonts/Poppins-Regular.ttf') format('truetype'); /* Adjust path as needed */
+    font-weight: 400; /* Regular weight */
+    font-style: normal;
+}
+
+.outline-button {
+    background-color: white; /* White background */
+    color: blue; /* Text color */
+    border: 2px solid blue; /* Blue border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+  }
+  
+.navbar {
+    background-color: white; /* Dark background */
+    overflow: hidden; /* Clear floats */
+}
+
+#RightNav {
+    display: flex; /* Keep the title and links in a row */
+    align-items: center; /* Center items vertically */
+    margin-left: 5%;
+
+}
+
+.navbar a {
+    float: left; /* Position links to the left */
+    display: block; /* Make links appear as blocks */
+    color: #404040;
+    font-family: "Poppins";
+ /* White text color */
+    text-align: center; /* Center the text */
+    padding: 14px 16px; /* Add some padding */
+    text-decoration: none; /* Remove underline */
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* Change background on hover */
+    color: #4200FF; /* Change text color on hover */
+}
+
+.navbar .active {
+    background-color: white; /* Active link color */
+    color: #4200FF; /* Text color for active link */
+}
