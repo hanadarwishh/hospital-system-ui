@@ -5,6 +5,7 @@
     flex-direction: column;  /* Keep it column for stacking */
     justify-content: flex-start;  /* Align items at the start */
     padding-left: 5%;
+    padding-right: 5%
 }
 
 .home-circle-container{
@@ -141,4 +142,90 @@
     display: flex;
     color: white,             
     /* padding: "10px", */
+}
+
+.home-text-field{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #DEDEDE;
+    width: 150px;
+    height: 30px;
+    background-color: #F3F3F3;
+    margin-left: 30px;
+    font-size: 13px;
+    color: "#5B5B5B78";
+    align-items: center;
+    display: "flex"
+}
+
+.home-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+    align-items: center;  
+    height: 200px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    background-color: "white";
+
+}
+
+.home-box-container{
+    
+    flex-direction: row;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 25px;
+    margin-bottom: 70px
+
+}
+
+.home-services-icon{
+    margin-bottom: 20px;
+    width: 40px;
+    height: auto;
+    color: blue;
+
+}
+
+.home-doctors-cards{
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    background-color: "white";
+
+
+
+}
+.home-doctor-cards-container{
+    justify-content: center;
+    gap: 90px;
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    margin-top: 40px;
+}
+
+.home-blue-box{
+    position: relative;
+    width: 150px;
+    height: 120px;
+    background-color: blue;
+    border-radius: 10px;
+    z-index: 10;
+    margin-top: 20px;
+}
+.home-doctors-images{
+    position: absolute;
+    width: 30px;
+    height: auto;
+    z-index: 12;
 }

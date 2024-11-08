@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../NavBar/navbar.css";
+import SignUp from "../../pages/Signup/Signup";
 import { Button } from "react-bootstrap";
 
-function handleSignUp() {
-  alert("Sign Up clicked!");
-}
+function Navbar() {
+  const [showSignUp, setShowSignUp] = useState(false);
 
-export default function Navbar() {
+  const handleSignUpClick = () => {
+    setShowSignUp(true); // Show the sign-up form
+  };
+
+  const handleCloseSignUp = () => {
+    setShowSignUp(false); // Hide the sign-up form
+  };
+
   const [activeLink, setActiveLink] = useState("home");
 
   const handleLinkClick = (link) => {
@@ -68,20 +75,21 @@ export default function Navbar() {
           Contact Us
         </Link>
         <Button
-          onClick={handleSignUp}
+          // onClick={}
           style={{
             marginLeft: "300px",
             padding: "3px 26px",
             fontSize: "12px",
             color: "#FFFFFF",
             backgroundColor: "#4200FF",
+            zIndex: 100,
           }}
         >
           Sign In
         </Button>
 
         <Button
-          onClick={handleSignUp}
+          onClick={handleSignUpClick}
           style={{
             marginLeft: "50px",
             padding: "3px 26px",
@@ -94,6 +102,22 @@ export default function Navbar() {
           Sign Up
         </Button>
       </div>
+      {showSignUp && (
+        <div className="sign-up-overlay">
+          <div className="sign-up-modal">
+            <button onClick={handleCloseSignUp} className="close-button">
+              {/* X */}
+            </button>
+            <SignUp />
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
+
+// function handleSignUp() {
+//   alert("Sign Up clicked!");
+// }
+
+export default Navbar;

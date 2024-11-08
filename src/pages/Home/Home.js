@@ -4,20 +4,38 @@ import "../../components/stylesheets/fonts.css";
 import Image from "../../components/Image.js";
 import image1 from "../../assets/images/homeDoc.png";
 import image2 from "../../assets/images/asd 3.png";
+import doctor1 from "../../assets/images/doctor.png";
 import {
   FaSearch,
   FaClipboardList,
   FaPhone,
   FaArrowRight,
   FaPlay,
+  FaMicroscope,
+  FaAmbulance,
+  FaMobile,
+  FaQuestion,
+  FaStar,
+  FaStarHalf,
 } from "react-icons/fa";
 
 import Box from "../../components/box.js";
 import { Button } from "react-bootstrap";
-import { PiX } from "react-icons/pi";
-import zIndex from "@mui/material/styles/zIndex.js";
+import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.js";
+import { useState } from "react";
 
 function Home() {
+  const [value, setValue] = useState("");
+  const [isOn, setIsOn] = useState(true);
+
+  const handleTextChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handleToggle = () => {
+    setIsOn((prevState) => !prevState);
+  };
+
   return (
     <div className="home-container">
       <div className="home-circle-container">
@@ -70,12 +88,61 @@ function Home() {
           <Box
             style={{
               width: "950px",
-              height: "70px",
+              height: "90px",
               zIndex: "26",
               borderRadius: "20px",
+              display: "flex",
             }}
           >
-            <h1 className="home-basic-text"> find a doctor</h1>
+            <div style={{ flexDirection: "column" }}>
+              <h1
+                className="home-basic-text"
+                style={{
+                  fontWeight: "bold",
+                  marginTop: "20px",
+                  marginLeft: "40px",
+                }}
+              >
+                Find a doctor
+              </h1>
+              <div
+                style={{
+                  flexDirection: "row",
+                  display: "flex",
+                  marginRight: "30px",
+                  marginLeft: "30px",
+                }}
+              >
+                <input
+                  type="text"
+                  value={value}
+                  onChange={handleTextChange}
+                  placeholder="Name a doctor"
+                  className="home-text-field"
+                ></input>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={handleTextChange}
+                  placeholder="Speciality"
+                  className="home-text-field"
+                  style={{ marginRight: "40px" }}
+                ></input>
+                <h1 className="home-basic-text" style={{ marginRight: "20px" }}>
+                  Availability
+                </h1>
+                <ToggleSwitch />
+                <Button
+                  style={{
+                    backgroundColor: "blue",
+                    width: "70px",
+                    marginLeft: "60px",
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
+            </div>
           </Box>
         </div>
 
@@ -261,6 +328,71 @@ function Home() {
             </div>
           </Box>
         </div>
+      </div>
+      <div
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+          marginTop: "200px",
+        }}
+      ></div>
+      <h1
+        className="home-basic-text"
+        style={{
+          fontSize: "50px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Our medical services
+        <h1 className="home-paragraph">
+          we are dedicated to serve you <br /> best medical service{" "}
+        </h1>
+      </h1>
+
+      <div className="home-box-container">
+        <div className="home-box">
+          <FaMicroscope className="home-services-icon" />
+          <h1 className="home-basic-text"> well equipped labs</h1>
+        </div>
+        <div className="home-box">
+          <FaAmbulance className="home-services-icon" />
+          <h1 className="home-basic-text"> Emergency Ambulance</h1>
+        </div>
+        <div className="home-box">
+          <FaMobile className="home-services-icon" />
+          <h1 className="home-basic-text"> Online appointment</h1>
+        </div>
+        <div className="home-box">
+          <FaQuestion className="home-services-icon" />
+          <h1 className="home-basic-text"> Call center</h1>
+        </div>
+      </div>
+      <h1
+        className="home-basic-text"
+        style={{
+          fontSize: "50px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Meet our doctors
+        <h1 className="home-paragraph">
+          well qualified doctors ready to serve you
+        </h1>
+      </h1>
+      <div className="home-doctor-cards-container">
+        <div className="home-doctors-cards">
+          <div className="home-blue-box">
+            <image className="home-doctors-images" src={doctor1}></image>
+          </div>
+        </div>
+        <div className="home-doctors-cards"></div>
+      </div>
+      <div className="home-doctor-cards-container">
+        <div className="home-doctors-cards"></div>
+        <div className="home-doctors-cards"></div>
       </div>
     </div>
   );
