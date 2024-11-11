@@ -12,13 +12,18 @@ function Navbar() {
   };
 
   const handleCloseSignUp = () => {
-    setShowSignUp(false); // Hide the sign-up form
+    setShowSignUp(false);
   };
 
   const [activeLink, setActiveLink] = useState("home");
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
+  };
+  const handleOverlayClick = (e) => {
+    if (e.target.className === "sign-up-overlay") {
+      handleCloseSignUp();
+    }
   };
 
   return (
@@ -103,7 +108,7 @@ function Navbar() {
         </Button>
       </div>
       {showSignUp && (
-        <div className="sign-up-overlay">
+        <div className="sign-up-overlay" onClick={handleOverlayClick}>
           <div className="sign-up-modal">
             <button onClick={handleCloseSignUp} className="close-button">
               {/* X */}

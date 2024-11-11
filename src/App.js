@@ -7,6 +7,7 @@ import Navbar from "./components/NavBar/Navbar";
 import Home from "./pages/Home/Home";
 import Patient from "./pages/Patient/Patient";
 import Doctor from "./pages/Doctor/Doctor";
+import Footer from "./components/Footer/Footer.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/doctor" element={<Doctor />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }
