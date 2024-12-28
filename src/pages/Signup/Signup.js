@@ -2,8 +2,21 @@ import React, { useState } from "react";
 import "./Signup.css";
 import doctor1 from "../../assets/images/doctor.png";
 import doctor2 from "../../assets/images/doctor2.png";
+import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 function SignUp() {
+  const [doctorData, setDoctorData] = useState({
+    LastName: "",
+    password: "",
+    email: "",
+    FirstName: "",
+    specialization: "",
+  });
+  const [responseMessage, setResponseMessage] = useState("");
+  const [error, setError] = useState("");
+
+  // Handle form submission
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,13 +24,42 @@ function SignUp() {
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleChange = (e) => {
+    // const { name, value } = e.target;
+
     const { name, value } = e.target;
+    setDoctorData((prev) => ({ ...prev, [name]: value }));
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    try {
+      const response = await fetch("http://localhost:8080/v1/doctors", {
+        // Replace with your API URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(doctorData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post doctor data");
+      }
+
+      const data = await response.json();
+      setResponseMessage(`Doctor added successfully: ${data}`);
+      setDoctorData({ FirstName: "", LastName: "" }); // Reset form fields
+      setError("");
+      navigate();
+    } catch (err) {
+      setError(err.message);
+      console.log(err.message);
+      setResponseMessage("");
+    }
+
     e.preventDefault();
     console.log("Form submitted", formData);
   };
@@ -36,7 +78,7 @@ function SignUp() {
               type="text"
               name="firstName"
               placeholder="First Name"
-              value={formData.firstName}
+              value={doctorData.firstName}
               onChange={handleChange}
               required
             />
@@ -44,7 +86,7 @@ function SignUp() {
               type="text"
               name="lastName"
               placeholder="Last Name"
-              value={formData.lastName}
+              value={doctorData.lastName}
               onChange={handleChange}
               required
             />
@@ -53,7 +95,7 @@ function SignUp() {
             type="email"
             name="email"
             placeholder="Email Address"
-            value={formData.email}
+            value={doctorData.email}
             onChange={handleChange}
             required
             className="full-width-input"
@@ -63,7 +105,7 @@ function SignUp() {
               type="password"
               name="password"
               placeholder="Password"
-              value={formData.password}
+              value={doctorData.password}
               onChange={handleChange}
               required
             />
@@ -76,10 +118,15 @@ function SignUp() {
               required
             />
           </div>
+
           <div className="terms">
-            <input type="checkbox" required />
-            <label>I accept all terms and conditions</label>
+            <label>
+              <input type="checkbox" required />
+              <span className="terms-text">I accept all </span>
+              <span className="terms-text-blue">terms and conditions</span>
+            </label>
           </div>
+
           <button type="submit">Sign Up</button>
         </form>
         <div
@@ -90,7 +137,10 @@ function SignUp() {
           }}
         >
           <h1 className="sign-up-signin">Already have an account?</h1>
-          <h1 className="log-in"> Log in</h1>
+          <a href className="log-in">
+            {" "}
+            Log in
+          </a>
         </div>
         {/* <p>
           Already have an account?{" "}

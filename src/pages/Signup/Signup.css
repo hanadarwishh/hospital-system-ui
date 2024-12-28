@@ -93,15 +93,31 @@
   
   .terms {
     display: flex;
-    align-items: flex-start; /* Align checkbox and label to the left */
-    width: 100%;
+    align-items: center;
     margin-top: 8px;
-    text-align: left; /* Align the label text to the left */
+    flex-direction: row;
   }
   
   .terms input {
-    margin-right: 5px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
   }
+  
+  .terms-text {
+    display: inline;
+    font-family: Poppins;
+    font-size: 12px;
+  }
+  
+  .terms-text-blue {
+    display: inline;
+    font-family: Poppins;
+    color: blue;
+    font-size: 12px;
+
+  }
+  
   .sign-up-signin{
     margin-top: 60px;
     font-family: Poppins;
@@ -116,4 +132,15 @@
     font-size: 12px;
     color: blue;
   }
+  
+  .sign-up-checkbox{
+    background-color: pink;
+  }
+
+  input[type="checkbox"] {
+    position: relative;
+    top: 10px; /* Move it visually */
+    left: -60px;  }
+
+    
   
