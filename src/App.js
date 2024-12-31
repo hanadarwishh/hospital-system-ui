@@ -10,13 +10,25 @@ import Dashboard from "./pages/DoctorDashboard/DoctorDashboard";
 import Footer from "./components/Footer/Footer.js";
 import Schedule from "./pages/Schedule/Schedule.js";
 import Appointment from "./pages/Appointment/Appointment.js";
+import MyProfile from "./pages/MyProfile/MyProfile.js";
+import AddSchedule from "./pages/AddSchedule/AddSchedule.js";
 function App() {
   const location = useLocation(); // Get the current location
 
   // Define routes where the navbar should be hidden
-  const hideNavbarRoutes = ["/dashboard", "/appointment", "/schedule"];
+  const hideNavbarRoutes = [
+    "/dashboard",
+    "/appointment",
+    "/schedule",
+    "/myprofile",
+  ];
 
-  const hideFooterRoutes = ["/dashboard", "/appointment", "/schedule"];
+  const hideFooterRoutes = [
+    "/dashboard",
+    "/appointment",
+    "/schedule",
+    "/myprofile",
+  ];
 
   return (
     <div>
@@ -31,6 +43,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/appointment" element={<Appointment />} />
+        <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/addSchedule" element={<AddSchedule />} />
       </Routes>
       {!hideFooterRoutes.includes(location.pathname) && <Footer />}
     </div>

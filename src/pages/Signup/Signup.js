@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import "./Signup.css";
 import doctor1 from "../../assets/images/doctor.png";
 import doctor2 from "../../assets/images/doctor2.png";
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
+import { useNavigate } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignUp() {
   const [doctorData, setDoctorData] = useState({
@@ -15,29 +18,17 @@ function SignUp() {
   const [responseMessage, setResponseMessage] = useState("");
   const [error, setError] = useState("");
 
-  // Handle form submission
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    // const { name, value } = e.target;
-
     const { name, value } = e.target;
     setDoctorData((prev) => ({ ...prev, [name]: value }));
-    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/v1/doctors", {
-        // Replace with your API URL
+      const response = await fetch("http://localhost:8080/api/doctors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,26 +37,46 @@ function SignUp() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to post doctor data");
+        const errorData = await response.json(); // Parse error details from response
+        const message = errorData.message;
+        if (errorData.statusCode === 409) {
+          toast.error(message);
+          console.log("here2");
+        }
+        toast.error(error.message);
+
+        throw new Error(errorData.message || "Failed to post doctor data");
       }
 
       const data = await response.json();
       setResponseMessage(`Doctor added successfully: ${data}`);
-      setDoctorData({ FirstName: "", LastName: "" }); // Reset form fields
+      console.log(responseMessage);
+      localStorage.setItem("doctor", JSON.stringify(data)); // Storing in local storage
+      // console.log(data);
+      setDoctorData({
+        LastName: "",
+        password: "",
+        email: "",
+        FirstName: "",
+        specialization: "",
+      }); // Reset all fields
       setError("");
-      navigate();
+      navigate("/dashboard"); // Replace "/dashboard" with your desired route
     } catch (err) {
+      console.log("this" + err.message);
       setError(err.message);
-      console.log(err.message);
+      console.log("here");
+
+      // console.log(responseMessage);
+      // console.log(error);
+      console.error("Submission Error:", err.message);
       setResponseMessage("");
     }
-
-    e.preventDefault();
-    console.log("Form submitted", formData);
   };
 
   return (
     <div className="sign-up-container">
+      <ToastContainer />
       <div className="sign-up-blue-container">
         <img className="sign-up-image" src={doctor1} alt="Doctor 1" />
         <img className="sign-up-image2" src={doctor2} alt="Doctor 2" />
@@ -76,17 +87,17 @@ function SignUp() {
           <div className="signup-row">
             <input
               type="text"
-              name="firstName"
+              name="FirstName"
               placeholder="First Name"
-              value={doctorData.firstName}
+              value={doctorData.FirstName}
               onChange={handleChange}
               required
             />
             <input
               type="text"
-              name="lastName"
+              name="LastName"
               placeholder="Last Name"
-              value={doctorData.lastName}
+              value={doctorData.LastName}
               onChange={handleChange}
               required
             />
@@ -113,7 +124,7 @@ function SignUp() {
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              // value={formData.confirmPassword}
               onChange={handleChange}
               required
             />

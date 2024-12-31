@@ -1,47 +1,55 @@
-
+/* Sidebar */
 .sidebar {
-    width: 250px;
-    height: 100vh;
- 
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background: #FFFFFF;
-    box-shadow: 0px 3.30909px 19.8545px -0.827273px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(16.5455px);
-  }
-  
-  .sidebar-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #ecf0f1;
-  }
-  
-  .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .sidebar-link {
-    color: #bdc3c7;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .sidebar-link:hover {
-    background-color: #34495e;
-  }
-  
-  .active-link {
-    background-color: #1abc9c;
-    color: #fff;
-  }
-  
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #FFFFFF;
+  box-shadow: 0px 3.30909px 19.8545px -0.827273px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16.5455px);
+}
+
+/* Sidebar Title */
+.sidebar-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ecf0f1;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Sidebar Links */
+.sidebar-link {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-family: Poppins;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, font-weight 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+/* Sidebar Link Hover Effect */
+.sidebar-link:hover {
+  background-color: blue;
+}
+
+/* Active Link - Bold & Blue Mark */
+.sidebar-link.active {
+  background-color: #ecf0f1; /* Light background for active link */
+  color: black; /* Blue color for active text */
+  font-weight: bold; /* Make text bold */
+  border-right: 5px solid blue; /* Blue vertical mark on the left side */
+}

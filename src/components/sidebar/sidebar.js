@@ -9,32 +9,36 @@ const Sidebar = () => {
       <nav className="sidebar-nav">
         <NavLink
           to="/dashboard"
-          className="sidebar-link"
-          activeClassName="active-link"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
         >
           Dashboard
         </NavLink>
         <NavLink
           to="/schedule"
-          className="sidebar-link"
-          activeClassName="active-link"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
         >
           Schedule
         </NavLink>
         <NavLink
           to="/appointment"
-          className="sidebar-link"
-          activeClassName="active-link"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
         >
           Appointment
         </NavLink>
-        {/* <NavLink
-          to="/dashboard"
-          className="sidebar-link"
-          activeClassName="active-link"
+        <NavLink
+          to="/myprofile"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
         >
-          Dashboard
-        </NavLink> */}
+          My Profile
+        </NavLink>
       </nav>
     </div>
   );

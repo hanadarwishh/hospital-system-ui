@@ -1,0 +1,123 @@
+body {
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  font-family: "Roboto", sans-serif;
+}
+
+.main-container-my-profile{
+  display: flex;
+  height: 100vh;
+  margin-top: 5%;
+  margin-left: 20%
+}
+
+.profile-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-pic-section {
+  text-align: center;
+}
+
+.profile-pic-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.upload-icon input {
+  display: none;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  color: #007bff;
+}
+
+.info-input {
+  flex-grow: 1;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.error-input {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.action-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-button {
+  background: #28a745;
+  color: #fff;
+}
+
+.cancel-button {
+  background: #dc3545;
+  color: #fff;
+}
+
+.edit-button {
+  background: #007bff;
+  color: #fff;
+}
+
+.signout-button {
+  background: #6c757d;
+  color: #fff;
+}

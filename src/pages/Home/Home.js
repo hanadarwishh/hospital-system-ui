@@ -15,8 +15,6 @@ import {
   FaAmbulance,
   FaMobile,
   FaQuestion,
-  FaStar,
-  FaStarHalf,
 } from "react-icons/fa";
 
 import Box from "../../components/box.js";
@@ -313,8 +311,10 @@ function Home() {
                   color: "black",
                   fontSize: "7px",
                 }}
-              ></h1>
-              contact no
+              >
+                {" "}
+                contact no
+              </h1>
               <h1
                 style={{
                   fontFamily: "Poppins",

@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../NavBar/navbar.css";
 import SignUp from "../../pages/Signup/Signup";
+import SignIn from "../../pages/SignIn/SignIn"; // Assuming you have the SignIn component
 import { Button } from "react-bootstrap";
 
 function Navbar() {
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+
+  const handleSignInClick = () => {
+    setShowSignIn(true); // Show the Sign In modal
+  };
 
   const handleSignUpClick = () => {
-    setShowSignUp(true); // Show the sign-up form
+    setShowSignUp(true); // Show the Sign Up modal
   };
 
   const handleCloseSignUp = () => {
-    setShowSignUp(false);
+    setShowSignUp(false); // Close Sign Up modal
+  };
+
+  const handleCloseSignIn = () => {
+    setShowSignIn(false); // Close Sign In modal
   };
 
   const [activeLink, setActiveLink] = useState("home");
@@ -20,9 +30,11 @@ function Navbar() {
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
+
   const handleOverlayClick = (e) => {
     if (e.target.className === "sign-up-overlay") {
-      handleCloseSignUp();
+      handleCloseSignUp(); // Close Sign Up modal if overlay is clicked
+      handleCloseSignIn(); // Close Sign In modal if overlay is clicked
     }
   };
 
@@ -80,7 +92,7 @@ function Navbar() {
           Contact Us
         </Link>
         <Button
-          // onClick={}
+          onClick={handleSignInClick}
           style={{
             marginLeft: "300px",
             padding: "3px 26px",
@@ -107,6 +119,7 @@ function Navbar() {
           Sign Up
         </Button>
       </div>
+
       {showSignUp && (
         <div className="sign-up-overlay" onClick={handleOverlayClick}>
           <div className="sign-up-modal">
@@ -117,12 +130,19 @@ function Navbar() {
           </div>
         </div>
       )}
+
+      {showSignIn && (
+        <div className="sign-up-overlay" onClick={handleOverlayClick}>
+          <div className="sign-up-modal">
+            <button onClick={handleCloseSignIn} className="close-button">
+              {/* X */}
+            </button>
+            <SignIn />
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
-
-// function handleSignUp() {
-//   alert("Sign Up clicked!");
-// }
 
 export default Navbar;
