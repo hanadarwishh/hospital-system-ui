@@ -385,7 +385,7 @@ function Home() {
       <div className="home-doctor-cards-container">
         <div className="home-doctors-cards">
           <div className="home-blue-box">
-            <image className="home-doctors-images" src={doctor1}></image>
+            <img className="home-doctors-images" src={doctor1}></img>
           </div>
         </div>
         <div className="home-doctors-cards"></div>

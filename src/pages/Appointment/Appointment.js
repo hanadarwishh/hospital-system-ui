@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./appointment.css";
 import Sidebar from "../../components/sidebar/sidebar";
+
 const TodaysAppointments = () => {
-  const [showAddPrescriptionModal, setShowAddPrescriptionModal] =
-    useState(false);
-
-  const handleAddClick = () => {
-    setShowAddPrescriptionModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowAddPrescriptionModal(false);
-  };
+  const navigate = useNavigate();
 
   const appointments = [
     {
@@ -32,21 +25,33 @@ const TodaysAppointments = () => {
       time: "1:00 PM",
       issue: "Back Pain",
     },
+    {
+      id: 4,
+      patientName: "Emily Davis",
+      time: "2:30 PM",
+      issue: "Cold",
+    },
   ];
+
+  const handleAddClick = (appointment) => {
+    navigate("/patient-profile", { state: { appointment } });
+  };
+  const handleAppointmentClick = (appointment) => {
+    navigate("/patient-profile", { state: { appointment } });
+  };
 
   return (
     <div className="appointments-container">
       <Sidebar />
       <div className="content">
-        <div className="header">
-          <h1>Today's Appointments</h1>
-          <button className="add-button" onClick={handleAddClick}>
-            + Add Prescription
-          </button>
-        </div>
+        <h1>Today's Appointments</h1>
         <div className="appointments-list">
           {appointments.map((appointment) => (
-            <div key={appointment.id} className="appointment-card">
+            <div
+              key={appointment.id}
+              onClick={() => handleAppointmentClick(appointment)}
+              className="appointment-card"
+            >
               <h3>{appointment.patientName}</h3>
               <p>
                 <strong>Time:</strong> {appointment.time}
@@ -54,42 +59,16 @@ const TodaysAppointments = () => {
               <p>
                 <strong>Issue:</strong> {appointment.issue}
               </p>
+              <button
+                className="add-button"
+                onClick={() => handleAddClick(appointment)}
+              >
+                + Add Prescription
+              </button>
             </div>
           ))}
         </div>
       </div>
-      {showAddPrescriptionModal && (
-        <div
-          className="modal-overlay"
-          onClick={(e) =>
-            e.target.className === "modal-overlay" && handleCloseModal()
-          }
-        >
-          <div className="modal">
-            <button className="close-button" onClick={handleCloseModal}>
-              X
-            </button>
-            <h2>Add Prescription</h2>
-            <form>
-              <label>
-                Medication:
-                <input type="text" name="medication" required />
-              </label>
-              <label>
-                Dosage:
-                <input type="text" name="dosage" required />
-              </label>
-              <label>
-                Instructions:
-                <textarea name="instructions" required></textarea>
-              </label>
-              <button type="submit" className="submit-button">
-                Save
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

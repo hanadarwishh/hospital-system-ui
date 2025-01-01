@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ReactCalendar from "react-calendar";
-import { FaPlus, FaEdit, FaTrash, FaMapMarkerAlt } from "react-icons/fa"; // Added location icon
+import { FaPlus, FaEdit, FaTrash, FaMapMarkerAlt } from "react-icons/fa";
 import Sidebar from "../../components/sidebar/sidebar"; // Adjust path as needed
 import AddSchedule from "../AddSchedule/AddSchedule"; // Create this component
 import EditSchedule from "../EditSchedule/EditSchedule"; // Separate EditSchedule Component
-import "./Schedule.css";
+import styles from "./Schedule.module.css"; // Import styles for the component
 
 const DoctorSchedule = () => {
   const [schedule, setSchedule] = useState([]);
@@ -32,7 +32,7 @@ const DoctorSchedule = () => {
       }
     };
     fetchSchedule();
-  });
+  }, [drId]); // Make sure the fetch only runs when `drId` changes
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -73,44 +73,37 @@ const DoctorSchedule = () => {
   };
 
   const handleEditSchedule = async (scheduleItem) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/doctors/schedule/${scheduleItem.id}`
-      );
-      if (response.ok) {
-        const scheduleData = await response.json();
-        setEditSchedule(scheduleData); // Set the fetched schedule
-        setIsModalOpen(true); // Open the modal
-      } else {
-        console.error("Failed to fetch schedule by ID");
-      }
-    } catch (error) {
-      console.error("Error fetching schedule by ID:", error);
-    }
+    setEditSchedule(scheduleItem); // Set the selected schedule for editing
+    setIsModalOpen(true); // Open the modal
   };
 
   return (
-    <div className="main-container">
+    <div className={styles["main-container"]}>
       <Sidebar />
-      <div className="content-container">
+      <div className={styles["content-container"]}>
         <h2>Doctor's Schedule</h2>
 
         {/* Calendar */}
         <ReactCalendar
           onChange={handleDateChange}
           value={selectedDate}
-          tileClassName={({ date }) => (isScheduled(date) ? "scheduled" : "")}
+          tileClassName={({ date }) =>
+            isScheduled(date) ? styles.scheduled : ""
+          }
         />
 
         {/* Add Schedule Button */}
-        <button className="add-button" onClick={() => setIsModalOpen(true)}>
+        <button
+          className={styles["add-button"]}
+          onClick={() => setIsModalOpen(true)}
+        >
           <FaPlus /> Add Schedule
         </button>
 
-        {/* Open the AddSchedule or EditSchedule modal */}
+        {/* Modal for AddSchedule or EditSchedule */}
         {isModalOpen && (
-          <div className="overlay">
-            <div className="modal-content">
+          <div className={styles.overlay}>
+            <div className={styles["modal-content"]}>
               {editSchedule ? (
                 <EditSchedule
                   selectedDate={selectedDate}
@@ -131,22 +124,22 @@ const DoctorSchedule = () => {
         )}
 
         {/* Schedule List */}
-        <div className="schedule-list">
+        <div className={styles["schedule-list"]}>
           <h3>Schedule Details</h3>
           {schedule.length === 0 ? (
             <p>No schedules available.</p>
           ) : (
-            <div className="schedule-cards">
+            <div className={styles["schedule-cards"]}>
               {schedule.map((entry) => (
-                <div className="schedule-card" key={entry.id}>
-                  <div className="card-content">
-                    <div className="clinic-details">
+                <div className={styles["schedule-card"]} key={entry.id}>
+                  <div className={styles["card-content"]}>
+                    <div className={styles["clinic-details"]}>
                       <h4>{entry.clinicName}</h4>
-                      <div className="location">
+                      <div className={styles["location"]}>
                         <FaMapMarkerAlt /> <span>{entry.location}</span>
                       </div>
                     </div>
-                    <div className="schedule-times">
+                    <div className={styles["schedule-times"]}>
                       <p>
                         <strong>Start Time:</strong> {entry.timeStart}
                       </p>
@@ -156,15 +149,15 @@ const DoctorSchedule = () => {
                     </div>
                     <p>{entry.additionalDetails || "No additional details"}</p>
                   </div>
-                  <div className="card-actions">
+                  <div className={styles["card-actions"]}>
                     <button
-                      className="edit-button"
+                      className={styles["edit-button"]}
                       onClick={() => handleEditSchedule(entry)}
                     >
                       <FaEdit />
                     </button>
                     <button
-                      className="delete-button"
+                      className={styles["delete-button"]}
                       onClick={() => handleDeleteSchedule(entry.id)}
                     >
                       <FaTrash />

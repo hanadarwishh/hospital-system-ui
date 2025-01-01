@@ -12,6 +12,8 @@ import Schedule from "./pages/Schedule/Schedule.js";
 import Appointment from "./pages/Appointment/Appointment.js";
 import MyProfile from "./pages/MyProfile/MyProfile.js";
 import AddSchedule from "./pages/AddSchedule/AddSchedule.js";
+import AddPrescription from "./pages/AddPrescription/AddPrescription.js";
+import PatientProfile from "./pages/PatientProfile/PatientProfile.js";
 function App() {
   const location = useLocation(); // Get the current location
 
@@ -21,6 +23,8 @@ function App() {
     "/appointment",
     "/schedule",
     "/myprofile",
+    "/add-prescription",
+    "/patient-profile",
   ];
 
   const hideFooterRoutes = [
@@ -28,6 +32,8 @@ function App() {
     "/appointment",
     "/schedule",
     "/myprofile",
+    "/add-prescription",
+    "/patient-profile",
   ];
 
   return (
@@ -45,6 +51,8 @@ function App() {
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/addSchedule" element={<AddSchedule />} />
+        <Route path="/add-prescription" element={<AddPrescription />} />
+        <Route path="/patient-profile" element={<PatientProfile />} />
       </Routes>
       {!hideFooterRoutes.includes(location.pathname) && <Footer />}
     </div>

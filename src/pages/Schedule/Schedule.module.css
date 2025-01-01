@@ -26,11 +26,14 @@
     background-color: gray;
   }
   
-  /* Scheduled days marked on the calendar */
-  .scheduled {
-    background-color: #3498db !important;
-    color: white !important;
-  }
+  
+/* Styling for scheduled days */
+.scheduled {
+  background-color: #007bff !important; /* Pink background for scheduled tiles */
+  color: white !important; /* Ensure the text is visible */
+}
+
+  
   
   /* Modal styles */
   .modal {
