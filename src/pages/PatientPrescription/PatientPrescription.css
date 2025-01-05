@@ -1,0 +1,64 @@
+.prescription-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f4f7fc;
+  }
+  
+  .prescription-title {
+    font-size: 2rem;
+    text-align: center;
+    color: #4a90e2;
+    margin-bottom: 20px;
+  }
+  
+  .prescription-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .prescription-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .prescription-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .prescription-details {
+    margin-bottom: 30px;
+  }
+  
+  .detail-item {
+    margin-bottom: 10px;
+  }
+  
+  .detail-item strong {
+    color: #4a90e2;
+  }
+  
+  .doctor-info {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .doctor-info h3 {
+    color: #4a90e2;
+    margin-bottom: 10px;
+  }
+  
+  .doctor-info div {
+    margin-bottom: 10px;
+  }
+  
+  .doctor-info strong {
+    color: #333;
+  }
+  

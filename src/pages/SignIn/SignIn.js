@@ -8,6 +8,7 @@ function SignIn() {
     email: "",
     password: "",
   });
+  const [role, setRole] = useState("doctor"); // New state for role
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -16,10 +17,19 @@ function SignIn() {
     setLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const apiUrl =
+      role === "doctor"
+        ? "https://hospital-management-system-production-17a9.up.railway.app/api/doctors/signin"
+        : "https://hospital-management-system-production-17a9.up.railway.app/api/Patients/signin";
+
     try {
-      const response = await fetch("http://localhost:8080/api/doctors/signin", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,8 +43,13 @@ function SignIn() {
       }
 
       const data = await response.json();
-      localStorage.setItem("doctor", JSON.stringify(data)); // Store the logged-in doctor data in local storage
-      navigate("/dashboard"); // Redirect to dashboard after successful login
+      localStorage.setItem(role, JSON.stringify(data)); // Store the logged-in user data (doctor or patient) in local storage
+      console.log(data);
+      if (role === "doctor") {
+        navigate("/dashboard");
+      } else if (role === "patient") {
+        navigate("/patient-dashboard");
+      }
     } catch (err) {
       setError(err.message); // Display the error message
     }
@@ -66,6 +81,29 @@ function SignIn() {
             required
             className="full-width-input"
           />
+
+          {/* Role Selection */}
+          <div className="role-selection">
+            <label>
+              <input
+                type="radio"
+                value="doctor"
+                checked={role === "doctor"}
+                onChange={handleRoleChange}
+              />
+              Doctor
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="patient"
+                checked={role === "patient"}
+                onChange={handleRoleChange}
+              />
+              Patient
+            </label>
+          </div>
+
           {error && <div className="error-message">{error}</div>}
           <button type="submit">Log In</button>
         </form>

@@ -56,7 +56,7 @@ const AddSchedule = ({ selectedDate, closeModal, setSchedule }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/doctors/schedule",
+        "https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule",
         {
           method: "POST",
           headers: {

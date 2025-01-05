@@ -1,83 +1,139 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaGenderless,
+  FaBirthdayCake,
+} from "react-icons/fa";
+import "./PatientProfile.css";
 
-const Patient = () => {
+const PatientProfile = () => {
   const { state } = useLocation();
   const { appointment } = state || {};
   const navigate = useNavigate();
 
-  const [prescription, setPrescription] = useState(
-    appointment?.prescription || null
-  );
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [patient, setPatient] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleEditPrescription = () => {
-    navigate("/add-prescription", { state: { appointment } });
+  const doctor = JSON.parse(localStorage.getItem("doctor"));
+  const drId = doctor.id;
+
+  // Fetch patient data and prescriptions
+  useEffect(() => {
+    const fetchPrescriptions = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/doctors/prescription/patient/${appointment?.patientId}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setPrescriptions(data);
+        } else {
+          console.error("Failed to fetch prescriptions.");
+        }
+      } catch (error) {
+        console.error("Error fetching prescriptions:", error);
+      }
+    };
+
+    const fetchPatientData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/Patients/${appointment?.patientId}`
+        );
+        if (response.ok) {
+          const patientData = await response.json();
+          setPatient(patientData);
+        } else {
+          console.error("Failed to fetch patient data.");
+        }
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    };
+
+    if (appointment?.patientId) {
+      fetchPrescriptions();
+      fetchPatientData();
+    }
+    setIsLoading(false);
+  }, [appointment?.patientId]);
+
+  // Function to render non-null values with corresponding icons
+  const renderPatientInfo = (label, value, Icon) => {
+    if (value) {
+      return (
+        <div className="patient-info-item">
+          <Icon className="patient-info-icon" />
+          <strong>{label}:</strong> {value}
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "50px auto",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-      }}
-    >
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+    <div className="patient-container">
+      <div className="patient-info">
         <img
-          src="https://via.placeholder.com/150"
+          src={patient?.profilePicture || "https://via.placeholder.com/150"}
           alt="Patient Profile"
-          style={{ borderRadius: "50%", width: "150px", height: "150px" }}
+          className="patient-image"
         />
-        <h1>{appointment?.patientName}</h1>
+        <h1>
+          {patient?.firstName} {patient?.lastName}
+        </h1>
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
-        <h2>Prescription</h2>
-        {prescription ? (
-          <div
-            style={{
-              border: "1px solid #007bff",
-              padding: "15px",
-              borderRadius: "10px",
-              backgroundColor: "#f9f9f9",
-            }}
-          >
-            <p>
-              <strong>Medication:</strong> {prescription.medication}
-            </p>
-            <p>
-              <strong>Dosage:</strong> {prescription.dosage}
-            </p>
-            <p>
-              <strong>Days Per Week:</strong> {prescription.daysPerWeek}
-            </p>
-            <p>
-              <strong>Instructions:</strong> {prescription.instructions}
-            </p>
-          </div>
+      <div className="patient-details">
+        {renderPatientInfo("Email", patient?.email, FaEnvelope)}
+        {renderPatientInfo("Phone", patient?.phone, FaPhoneAlt)}
+        {renderPatientInfo("Gender", patient?.gender, FaGenderless)}
+        {renderPatientInfo("Age", patient?.age, FaBirthdayCake)}
+      </div>
+
+      <div className="prescriptions-section">
+        <h2>Prescriptions</h2>
+        {isLoading ? (
+          <p>Loading prescriptions...</p>
+        ) : prescriptions.length > 0 ? (
+          prescriptions.map((prescription, index) => (
+            <div key={index} className="prescription-card">
+              <p>
+                <strong>Medication:</strong> {prescription.medication}
+              </p>
+              <p>
+                <strong>Dosage:</strong> {prescription.dosage}
+              </p>
+              <p>
+                <strong>Days Per Week:</strong> {prescription.daysPerWeek}
+              </p>
+              <p>
+                <strong>Instructions:</strong> {prescription.instructions}
+              </p>
+              {drId === prescription.drId && (
+                <button className="btn-edit">Edit Prescription</button>
+              )}
+            </div>
+          ))
         ) : (
-          <p>No prescription added yet.</p>
+          <p>No prescriptions found for this patient.</p>
         )}
       </div>
 
       <button
-        onClick={handleEditPrescription}
-        style={{
-          backgroundColor: "#007bff",
-          color: "white",
-          fontSize: "16px",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        onClick={() =>
+          navigate("/add-prescription", { state: { appointment } })
+        }
+        className="btn-add"
       >
-        {prescription ? "Edit Prescription" : "Add Prescription"}
+        Add Prescription
       </button>
     </div>
   );
 };
 
-export default Patient;
+export default PatientProfile;

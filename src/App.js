@@ -14,6 +14,11 @@ import MyProfile from "./pages/MyProfile/MyProfile.js";
 import AddSchedule from "./pages/AddSchedule/AddSchedule.js";
 import AddPrescription from "./pages/AddPrescription/AddPrescription.js";
 import PatientProfile from "./pages/PatientProfile/PatientProfile.js";
+import PatientDashboard from "./pages/PatientDashboard/PatientDashboard.js";
+import MyProfilePatient from "./pages/MyProfilePatient/MyProfilePatient.js";
+import PatientPrescription from "./pages/PatientPrescription/PatientPrescription.js";
+import PatientAppointment from "./pages/PatientAppointment/PatientAppointment.js";
+
 function App() {
   const location = useLocation(); // Get the current location
 
@@ -25,6 +30,10 @@ function App() {
     "/myprofile",
     "/add-prescription",
     "/patient-profile",
+    "/patient-dashboard",
+    "/my-patient-profile",
+    "/patient-prescription",
+    "/patient-appointment",
   ];
 
   const hideFooterRoutes = [
@@ -34,6 +43,10 @@ function App() {
     "/myprofile",
     "/add-prescription",
     "/patient-profile",
+    "/patient-dashboard",
+    "/my-patient-profile",
+    "/patient-prescription",
+    "/patient-appointment",
   ];
 
   return (
@@ -53,6 +66,10 @@ function App() {
         <Route path="/addSchedule" element={<AddSchedule />} />
         <Route path="/add-prescription" element={<AddPrescription />} />
         <Route path="/patient-profile" element={<PatientProfile />} />
+        <Route path="/patient-dashboard" element={<PatientDashboard />} />
+        <Route path="/my-patient-profile" element={<MyProfilePatient />} />
+        <Route path="/patient-prescription" element={<PatientPrescription />} />
+        <Route path="/patient-appointment" element={<PatientAppointment />} />
       </Routes>
       {!hideFooterRoutes.includes(location.pathname) && <Footer />}
     </div>

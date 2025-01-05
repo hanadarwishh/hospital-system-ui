@@ -6,18 +6,22 @@ import {
   FaClipboard,
   FaCalendarAlt,
   FaInfoCircle,
+  FaHourglass,
 } from "react-icons/fa";
 
 const AddPrescription = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { appointment } = state || {};
+  const doctor = JSON.parse(localStorage.getItem("doctor"));
+  const drId = doctor.id;
 
   const [prescriptionData, setPrescriptionData] = useState({
     medication: "",
     dosage: "",
     daysPerWeek: "",
     instructions: "",
+    duration: "",
   });
 
   const handleInputChange = (e) => {
@@ -34,13 +38,14 @@ const AddPrescription = () => {
     }
 
     const requestData = {
-      patientName: appointment.patientName,
+      patientId: appointment.patientId,
+      drId: drId,
       ...prescriptionData,
     };
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/doctors/prescription",
+        "https://hospital-management-system-production-17a9.up.railway.app/api/doctors/prescription",
         {
           method: "POST",
           headers: {
@@ -85,7 +90,7 @@ const AddPrescription = () => {
 
         <div className="form-group-prescription">
           <label>
-            <FaClipboard className="icon" />
+            <FaClipboard className="icon-prescription" />
             Dosage:
           </label>
           <input
@@ -106,6 +111,19 @@ const AddPrescription = () => {
             type="number"
             name="daysPerWeek"
             value={prescriptionData.daysPerWeek}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group-prescription">
+          <label>
+            <FaHourglass className="icon-prescription" />
+            Duration:
+          </label>
+          <input
+            type="text"
+            name="duration"
+            value={prescriptionData.duration}
             onChange={handleInputChange}
             required
           />
