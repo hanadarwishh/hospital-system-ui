@@ -8,72 +8,95 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignUp() {
-  const [doctorData, setDoctorData] = useState({
-    LastName: "",
-    password: "",
-    email: "",
+  const [userData, setUserData] = useState({
+    role: "doctor",
     FirstName: "",
-    specialization: "",
+    LastName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    specialization: "", // Only for doctors
   });
-  const [responseMessage, setResponseMessage] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDoctorData((prev) => ({ ...prev, [name]: value }));
+    setUserData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRoleChange = (e) => {
+    const { value } = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      role: value,
+      specialization: value === "doctor" ? prev.specialization : "",
+      FirstName: value === "doctor" ? prev.FirstName : "",
+      LastName: value === "doctor" ? prev.LastName : "",
+      firstName: value !== "doctor" ? prev.firstName : "",
+      lastName: value !== "doctor" ? prev.lastName : "",
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://hospital-management-system-production-17a9.up.railway.app/api/doctors",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(doctorData),
-        }
-      );
+      let apiUrl = "";
+      let payload = { ...userData };
+
+      if (userData.role === "doctor") {
+        apiUrl =
+          "https://hospital-management-system-production-17a9.up.railway.app/api/doctors";
+        delete payload.firstName;
+        delete payload.lastName;
+      } else {
+        apiUrl =
+          userData.role === "patient"
+            ? "https://hospital-management-system-production-17a9.up.railway.app/api/Patients"
+            : "https://hospital-management-system-production-17a9.up.railway.app/api/nurse";
+        delete payload.FirstName;
+        delete payload.LastName;
+        delete payload.specialization;
+      }
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Parse error details from response
-        const message = errorData.message;
-        if (errorData.statusCode === 409) {
-          toast.error(message);
-          console.log("here2");
-        }
-        toast.error(error.message);
-
-        throw new Error(errorData.message || "Failed to post doctor data");
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to sign up");
+        throw new Error(errorData.message || "Failed to sign up");
       }
 
       const data = await response.json();
-      setResponseMessage(`Doctor added successfully: ${data}`);
-      console.log(responseMessage);
-      localStorage.setItem("doctor", JSON.stringify(data)); // Storing in local storage
-      // console.log(data);
-      setDoctorData({
-        LastName: "",
-        password: "",
-        email: "",
-        FirstName: "",
-        specialization: "",
-      }); // Reset all fields
-      setError("");
-      navigate("/dashboard"); // Replace "/dashboard" with your desired route
-    } catch (err) {
-      console.log("this" + err.message);
-      setError(err.message);
-      console.log("here");
+      toast.success("Signup successful!");
 
-      // console.log(responseMessage);
-      // console.log(error);
-      console.error("Submission Error:", err.message);
-      setResponseMessage("");
+      // Save user data to localStorage based on role
+      localStorage.setItem(
+        userData.role,
+        JSON.stringify({ ...data, role: userData.role })
+      );
+
+      setUserData({
+        role: "doctor",
+        FirstName: "",
+        LastName: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        specialization: "",
+      });
+
+      navigate("/nurse-info");
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 
@@ -88,28 +111,51 @@ function SignUp() {
         <h1 className="sign-up-title">Sign up for an account</h1>
         <form onSubmit={handleSubmit}>
           <div className="signup-row">
-            <input
-              type="text"
-              name="FirstName"
-              placeholder="First Name"
-              value={doctorData.FirstName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="LastName"
-              placeholder="Last Name"
-              value={doctorData.LastName}
-              onChange={handleChange}
-              required
-            />
+            {userData.role === "doctor" ? (
+              <>
+                <input
+                  type="text"
+                  name="FirstName"
+                  placeholder="First Name"
+                  value={userData.FirstName}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="LastName"
+                  placeholder="Last Name"
+                  value={userData.LastName}
+                  onChange={handleChange}
+                  required
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={userData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={userData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </>
+            )}
           </div>
           <input
             type="email"
             name="email"
             placeholder="Email Address"
-            value={doctorData.email}
+            value={userData.email}
             onChange={handleChange}
             required
             className="full-width-input"
@@ -119,7 +165,7 @@ function SignUp() {
               type="password"
               name="password"
               placeholder="Password"
-              value={doctorData.password}
+              value={userData.password}
               onChange={handleChange}
               required
             />
@@ -127,10 +173,32 @@ function SignUp() {
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
-              // value={formData.confirmPassword}
-              onChange={handleChange}
               required
             />
+          </div>
+
+          <div className="signup-row">
+            <select
+              name="role"
+              value={userData.role}
+              onChange={handleRoleChange}
+              required
+              className="role-select"
+            >
+              <option value="doctor">Doctor</option>
+              <option value="patient">Patient</option>
+              <option value="nurse">Nurse</option>
+            </select>
+            {userData.role === "doctor" && (
+              <input
+                type="text"
+                name="specialization"
+                placeholder="Specialization"
+                value={userData.specialization}
+                onChange={handleChange}
+                required
+              />
+            )}
           </div>
 
           <div className="terms">
@@ -151,17 +219,10 @@ function SignUp() {
           }}
         >
           <h1 className="sign-up-signin">Already have an account?</h1>
-          <a href className="log-in">
-            {" "}
+          <a href="/login" className="log-in">
             Log in
           </a>
         </div>
-        {/* <p>
-          Already have an account?{" "}
-          <a href="/login" className="log-in" style={{ color: "blue" }}>
-            Log in
-          </a>
-        </p> */}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function SignIn() {
     email: "",
     password: "",
   });
-  const [role, setRole] = useState("doctor"); // New state for role
+  const [role, setRole] = useState("doctor"); // Default role is "doctor"
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -26,7 +26,9 @@ function SignIn() {
     const apiUrl =
       role === "doctor"
         ? "https://hospital-management-system-production-17a9.up.railway.app/api/doctors/signin"
-        : "https://hospital-management-system-production-17a9.up.railway.app/api/Patients/signin";
+        : role === "patient"
+        ? "https://hospital-management-system-production-17a9.up.railway.app/api/Patients/signin"
+        : "https://hospital-management-system-production-17a9.up.railway.app/api/nurse/signin"; // Added API for nurses
 
     try {
       const response = await fetch(apiUrl, {
@@ -43,12 +45,14 @@ function SignIn() {
       }
 
       const data = await response.json();
-      localStorage.setItem(role, JSON.stringify(data)); // Store the logged-in user data (doctor or patient) in local storage
+      localStorage.setItem(role, JSON.stringify(data)); // Store the logged-in user data (doctor, patient, or nurse)
       console.log(data);
       if (role === "doctor") {
         navigate("/dashboard");
       } else if (role === "patient") {
         navigate("/patient-dashboard");
+      } else if (role === "nurse") {
+        navigate("/nurse-dashboard"); // Add nurse dashboard navigation
       }
     } catch (err) {
       setError(err.message); // Display the error message
@@ -101,6 +105,15 @@ function SignIn() {
                 onChange={handleRoleChange}
               />
               Patient
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="nurse"
+                checked={role === "nurse"}
+                onChange={handleRoleChange}
+              />
+              Nurse
             </label>
           </div>
 

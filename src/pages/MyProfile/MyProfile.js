@@ -19,6 +19,7 @@ const MyProfile = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [nurseQuery, setNurseQuery] = useState("");
   const [nurses, setNurses] = useState([]);
+  const [selectedNurse, setSelectedNurse] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,9 +64,7 @@ const MyProfile = () => {
       return;
     }
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/nurse?query=${query}`
-      );
+      const response = await fetch(`http://localhost:8080/api/nurse`);
       if (response.ok) {
         const data = await response.json();
         setNurses(data);
@@ -85,6 +84,7 @@ const MyProfile = () => {
 
   const handleSaveChanges = async () => {
     try {
+      // Update doctor's profile data
       const response = await fetch(
         `http://localhost:8080/api/doctors/${doctor.id}`,
         {
@@ -98,8 +98,30 @@ const MyProfile = () => {
         const updatedDoctor = await response.json();
         setDoctor(updatedDoctor);
         localStorage.setItem("doctor", JSON.stringify(updatedDoctor));
+
+        // Now, handle updating the assigned doctor for the selected nurse (or patient)
+        if (formData.assignedNurse) {
+          console.log(formData.assignedNurse);
+          const responseAssignedDr = await fetch(
+            `http://localhost:8080/api/nurse/assignedDr/${formData.assignedNurse}`,
+
+            {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: doctor.id,
+            }
+          );
+
+          if (responseAssignedDr.ok) {
+            console.log("Assigned doctor updated successfully");
+            console.log(responseAssignedDr);
+          } else {
+            console.error("Failed to update assigned doctor");
+          }
+        }
+
         setIsEditing(false);
-        console.log("yes");
+        console.log("Profile updated successfully");
       } else {
         console.error("Failed to save changes");
       }
@@ -113,12 +135,43 @@ const MyProfile = () => {
     navigate("/");
   };
 
+  const handleMouseEnter = (nurse) => {
+    setSelectedNurse(nurse);
+  };
+
+  const handleMouseLeave = () => {
+    setSelectedNurse(null);
+  };
+
   if (!doctor) return <div>Loading...</div>;
 
-  // Logic for controlling editability of specialization
-  const isSpecializationEditable =
-    isEditing &&
-    (!doctor.specialization || doctor.specialization.trim() === "");
+  const profileFields = [
+    {
+      label: "First Name",
+      icon: FaUser,
+      field: "firstName",
+      readOnly: !isEditing,
+    },
+    {
+      label: "Last Name",
+      icon: FaUser,
+      field: "lastName",
+      readOnly: !isEditing,
+    },
+    { label: "Email", icon: FaEnvelope, field: "email", readOnly: !isEditing },
+    {
+      label: "Specialization",
+      icon: FaStethoscope,
+      field: "specialization",
+      readOnly: !isEditing,
+    },
+    {
+      label: "Assigned Nurse",
+      icon: FaUser,
+      field: "nurseQuery",
+      readOnly: !isEditing,
+    },
+  ];
 
   return (
     <div className="main-container-my-profile">
@@ -146,38 +199,7 @@ const MyProfile = () => {
             <h2>{`${formData.firstName} ${formData.lastName}`}</h2>
           </div>
           <div className="profile-info">
-            {[
-              {
-                label: "First Name",
-                icon: FaUser,
-                field: "firstName",
-                readOnly: true,
-              },
-              {
-                label: "Last Name",
-                icon: FaUser,
-                field: "lastName",
-                readOnly: true,
-              },
-              {
-                label: "Email",
-                icon: FaEnvelope,
-                field: "email",
-                readOnly: !isEditing,
-              },
-              {
-                label: "Specialization",
-                icon: FaStethoscope,
-                field: "specialization",
-                readOnly: !isSpecializationEditable,
-              },
-              {
-                label: "Assigned Nurse",
-                icon: FaUser,
-                field: "nurseQuery",
-                readOnly: !isEditing,
-              },
-            ].map(({ label, icon: Icon, field, readOnly }) => (
+            {profileFields.map(({ label, icon: Icon, field, readOnly }) => (
               <div className="info-row" key={field}>
                 <Icon className="info-icon" />
                 <div className="info-input">
@@ -218,6 +240,34 @@ const MyProfile = () => {
               </div>
             ))}
           </div>
+
+          {selectedNurse && (
+            <div className="nurse-info-popup">
+              <div className="nurse-info">
+                <img
+                  src={
+                    selectedNurse.profilePicture ||
+                    "https://via.placeholder.com/50"
+                  }
+                  alt="Nurse"
+                  className="nurse-profile-pic"
+                />
+                <div className="nurse-details">
+                  <p>
+                    <strong>Name:</strong>{" "}
+                    {`${selectedNurse.firstName} ${selectedNurse.lastName}`}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {selectedNurse.email}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong> {selectedNurse.phone}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="action-buttons">
             {isEditing ? (
               <>

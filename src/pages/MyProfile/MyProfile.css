@@ -121,3 +121,23 @@ input {
   background: #6c757d;
   color: #fff;
 }
+/* Nurse Picture Styling */
+.nurse-pic {
+  width: 40px; /* Size of the circle */
+  height: 40px; /* Size of the circle */
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover; /* Ensure the image fits inside the circle without distortion */
+  margin-right: 10px; /* Space between image and text */
+}
+
+/* You can also target the overall nurse-info container if needed */
+.nurse-info {
+  display: flex;
+  align-items: center; /* Align the image and text horizontally */
+}
+
+.nurse-info .nurse-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

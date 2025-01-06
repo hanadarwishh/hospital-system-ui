@@ -18,6 +18,9 @@ import PatientDashboard from "./pages/PatientDashboard/PatientDashboard.js";
 import MyProfilePatient from "./pages/MyProfilePatient/MyProfilePatient.js";
 import PatientPrescription from "./pages/PatientPrescription/PatientPrescription.js";
 import PatientAppointment from "./pages/PatientAppointment/PatientAppointment.js";
+import NurseInfo from "./pages/NurseInformation/NurseInfo.js";
+import NurseDashboard from "./pages/NurseDashboard/NurseDashboard.js";
+import NurseProfile from "./pages/NurseProfile/NurseProfile.js";
 
 function App() {
   const location = useLocation(); // Get the current location
@@ -34,6 +37,9 @@ function App() {
     "/my-patient-profile",
     "/patient-prescription",
     "/patient-appointment",
+    "/nurse-info",
+    "/nurse-dashboard",
+    "/nurse-profile",
   ];
 
   const hideFooterRoutes = [
@@ -47,6 +53,9 @@ function App() {
     "/my-patient-profile",
     "/patient-prescription",
     "/patient-appointment",
+    "/nurse-info",
+    "/nurse-dashboard",
+    "/nurse-profile",
   ];
 
   return (
@@ -70,6 +79,9 @@ function App() {
         <Route path="/my-patient-profile" element={<MyProfilePatient />} />
         <Route path="/patient-prescription" element={<PatientPrescription />} />
         <Route path="/patient-appointment" element={<PatientAppointment />} />
+        <Route path="/nurse-info" element={<NurseInfo />} />
+        <Route path="/nurse-dashboard" element={<NurseDashboard />} />
+        <Route path="/nurse-profile" element={<NurseProfile />} />
       </Routes>
       {!hideFooterRoutes.includes(location.pathname) && <Footer />}
     </div>
