@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.9181e10a.css",
-    "main.js": "/static/js/main.dc08fdc3.js",
-    "static/media/doctor.png": "/static/media/doctor.09aa4611a10c110cfae9.png",
-    "static/media/doctor2.png": "/static/media/doctor2.c9556219eb4bc7245241.png",
-    "static/media/homeDoc.png": "/static/media/homeDoc.8c76ff5ac01b19d7d27b.png",
-    "static/media/Poppins-Regular.ttf": "/static/media/Poppins-Regular.35d26b781dc5fda684cc.ttf",
-    "static/media/asd 3.png": "/static/media/asd 3.8dfcac3f25ad8dac943c.png",
-    "index.html": "/index.html",
-    "main.9181e10a.css.map": "/static/css/main.9181e10a.css.map",
-    "main.dc08fdc3.js.map": "/static/js/main.dc08fdc3.js.map"
+    "main.css": "/hospital-management-system-ui/static/css/main.a105b626.css",
+    "main.js": "/hospital-management-system-ui/static/js/main.6a285292.js",
+    "static/media/doctor.png": "/hospital-management-system-ui/static/media/doctor.09aa4611a10c110cfae9.png",
+    "static/media/doctor2.png": "/hospital-management-system-ui/static/media/doctor2.c9556219eb4bc7245241.png",
+    "static/media/homeDoc.png": "/hospital-management-system-ui/static/media/homeDoc.8c76ff5ac01b19d7d27b.png",
+    "static/media/Poppins-Regular.ttf": "/hospital-management-system-ui/static/media/Poppins-Regular.35d26b781dc5fda684cc.ttf",
+    "static/media/asd 3.png": "/hospital-management-system-ui/static/media/asd 3.8dfcac3f25ad8dac943c.png",
+    "index.html": "/hospital-management-system-ui/index.html",
+    "main.a105b626.css.map": "/hospital-management-system-ui/static/css/main.a105b626.css.map",
+    "main.6a285292.js.map": "/hospital-management-system-ui/static/js/main.6a285292.js.map"
   },
   "entrypoints": [
-    "static/css/main.9181e10a.css",
-    "static/js/main.dc08fdc3.js"
+    "static/css/main.a105b626.css",
+    "static/js/main.6a285292.js"
   ]
 }
