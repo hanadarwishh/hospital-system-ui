@@ -9,7 +9,7 @@
 .main-content {
   flex: 1;
   padding: 20px;
-  margin-left: 20%;
+  margin-left: 15%;
   overflow-y: auto;
 }
 
@@ -57,7 +57,7 @@
 
 .rating-text {
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   font-family: Poppins;
   font-weight: bold;
 }
@@ -68,7 +68,7 @@
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
   border-radius: 16px;
   padding: 20px;
-  margin-top: 20%;
+  margin-top: 5%;
   width: 80%; /* Adjusting the width of the table container */
   margin-left: auto;
   margin-right: auto;
@@ -125,4 +125,132 @@
 
 .see-more a:hover {
   text-decoration: underline;
+}
+/* Assigned Nurse Section Styles */
+.assigned-nurse-container {
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.nurse-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.nurse-card {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nurse-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nurse-picture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.nurse-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nurse-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nurse-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.nurse-specialty {
+  font-size: 1rem;
+  color: #555;
+}
+
+.nurse-details {
+  margin-top: 10px;
+}
+
+.nurse-details p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.nurse-info p, .nurse-details p {
+  margin: 5px 0;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures modal is on top */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content .nurse-pic-modal {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.modal-content .nurse-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content .close-modal {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+}
+
+.modal-content .close-modal:hover {
+  color: red;
+}
+
+.modal-content .nurse-modal-body {
+  margin-top: 10px;
+}
+
+.modal-content p {
+  font-size: 16px;
 }

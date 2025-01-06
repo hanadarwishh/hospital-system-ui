@@ -14,6 +14,7 @@ const PatientAppointment = () => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch appointments for a patient
   const fetchAppointmentsByPatientId = async (patientId) => {
     const response = await fetch(
       `https://hospital-management-system-production-17a9.up.railway.app/api/appointments/patient/${patientId}`
@@ -25,6 +26,7 @@ const PatientAppointment = () => {
     }
   };
 
+  // Fetch schedule by scheduleId
   const fetchScheduleById = async (scheduleId) => {
     const response = await fetch(
       `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule/${scheduleId}`
@@ -36,6 +38,7 @@ const PatientAppointment = () => {
     }
   };
 
+  // Fetch doctor by doctorId
   const fetchDoctorById = async (drId) => {
     const response = await fetch(
       `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/${drId}`
@@ -89,45 +92,100 @@ const PatientAppointment = () => {
     getAppointmentData();
   }, []);
 
-  if (loading) {
-    return <div>Loading your appointments...</div>;
-  }
+  // Separate pending and approved appointments
+  const pendingAppointments = appointments.filter(
+    (appointment) => !appointment.status || appointment.status === "pending"
+  );
+  const approvedAppointments = appointments.filter(
+    (appointment) => appointment.status === "approved"
+  );
 
   return (
     <div className="patient-appointment-container">
       <Sidebar />
       <div className="patient-appointment-page">
+        {/* Page Title */}
         <h1 className="patient-appointment-title">Your Appointments</h1>
-        {appointments.length === 0 ? (
+
+        {/* Loading Overlay */}
+        {loading && (
+          <div className="patient-appointment-loading-overlay">
+            <div className="patient-appointment-loading">
+              <p>Loading your appointments...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Pending Appointments Section */}
+        {!loading && pendingAppointments.length > 0 && (
+          <div className="appointment-status-section">
+            <h2>Pending Appointments</h2>
+            <div className="patient-appointment-list">
+              {pendingAppointments.map((appointment, index) => (
+                <div
+                  key={appointment.id}
+                  className="patient-appointment-card pending"
+                >
+                  <h2>
+                    <FaStethoscope /> {doctors[index]?.FirstName || "Doctor"}{" "}
+                    {doctors[index]?.LastName || ""}
+                  </h2>
+                  <p>
+                    <FaCalendarAlt /> <strong>Date:</strong>{" "}
+                    {appointment.date || "N/A"}
+                  </p>
+                  <p>
+                    <FaClock /> <strong>Time:</strong>{" "}
+                    {scheduleDetails[index]?.timeStart || "N/A"}
+                  </p>
+                  <p>
+                    <FaMapMarkerAlt /> <strong>Location:</strong>{" "}
+                    {scheduleDetails[index]?.clinicName || "N/A"}
+                  </p>
+                  <p>Status: Pending</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Approved Appointments Section */}
+        {!loading && approvedAppointments.length > 0 && (
+          <div className="appointment-status-section">
+            <h2>Approved Appointments</h2>
+            <div className="patient-appointment-list">
+              {approvedAppointments.map((appointment, index) => (
+                <div
+                  key={appointment.id}
+                  className="patient-appointment-card approved"
+                >
+                  <h2>
+                    <FaStethoscope /> {doctors[index]?.FirstName || "Doctor"}{" "}
+                    {doctors[index]?.LastName || ""}
+                  </h2>
+                  <p>
+                    <FaCalendarAlt /> <strong>Date:</strong>{" "}
+                    {appointment.date || "N/A"}
+                  </p>
+                  <p>
+                    <FaClock /> <strong>Time:</strong>{" "}
+                    {scheduleDetails[index]?.timeStart || "N/A"}
+                  </p>
+                  <p>
+                    <FaMapMarkerAlt /> <strong>Location:</strong>{" "}
+                    {scheduleDetails[index]?.clinicName || "N/A"}
+                  </p>
+                  <p>Status: Approved</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* No Appointments Section */}
+        {!loading && appointments.length === 0 && (
           <div className="patient-appointment-no-appointments">
             You have no scheduled appointments.
-          </div>
-        ) : (
-          <div className="patient-appointment-list">
-            {appointments.map((appointment, index) => (
-              <div key={appointment.id} className="patient-appointment-card">
-                <h2>
-                  <FaStethoscope /> {doctors[index]?.FirstName || "Doctor"}{" "}
-                  {doctors[index]?.LastName || ""}
-                </h2>
-                <p>
-                  <FaCalendarAlt /> <strong>Date:</strong>{" "}
-                  {appointment.date || "N/A"}
-                </p>
-                <p>
-                  <FaClock /> <strong>Time:</strong>{" "}
-                  {scheduleDetails[index]?.timeStart || "N/A"}
-                </p>
-                <p>
-                  <FaMapMarkerAlt /> <strong>Location:</strong>{" "}
-                  {scheduleDetails[index]?.clinicName + " Clinic" || "N/A"}
-                </p>
-                <p>
-                  <strong>Clinic:</strong>{" "}
-                  {scheduleDetails[index]?.clinicName || "N/A"}
-                </p>
-              </div>
-            ))}
           </div>
         )}
       </div>

@@ -51,7 +51,7 @@ const NurseProfile = () => {
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/nurse/${nurse.id}`,
+        `https://hospital-management-system-production-17a9.up.railway.app/api/nurse/${nurse.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

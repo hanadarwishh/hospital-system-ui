@@ -10,7 +10,7 @@ const PrescriptionPage = () => {
   // Replace with actual API endpoint to fetch prescriptions by patient ID
   const fetchPrescriptionsByPatientId = async (patientId) => {
     const response = await fetch(
-      `http://localhost:8080/api/doctors/prescription/patient/${patientId}`
+      `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/prescription/patient/${patientId}`
     );
     if (response.ok) {
       return await response.json();
@@ -21,7 +21,9 @@ const PrescriptionPage = () => {
 
   // Replace with actual API endpoint to fetch doctor details by ID
   const fetchDoctorById = async (drId) => {
-    const response = await fetch(`http://localhost:8080/api/doctors/${drId}`);
+    const response = await fetch(
+      `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/${drId}`
+    );
     if (response.ok) {
       return await response.json();
     } else {

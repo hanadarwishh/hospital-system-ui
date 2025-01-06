@@ -63,10 +63,6 @@ const NurseDashboard = () => {
     ? nurse.profilePicture
     : "https://via.placeholder.com/150"; // fallback image
 
-  if (loading) {
-    return <div>Loading...</div>; // Optionally, you can add a loading state here
-  }
-
   return (
     <div className="dashboard-container">
       <Sidebar />
@@ -131,7 +127,24 @@ const NurseDashboard = () => {
                 <th>Approval</th>
               </tr>
             </thead>
-            <tbody>{/* Appointment request data will go here */}</tbody>
+            <tbody>
+              {/* Render loading skeleton for appointment rows */}
+              {loading ? (
+                <tr>
+                  <td>Loading...</td>
+                  <td>Loading...</td>
+                  <td>Loading...</td>
+                  <td>Loading...</td>
+                </tr>
+              ) : (
+                <tr>
+                  <td>John Doe</td>
+                  <td>Fever</td>
+                  <td>01/25</td>
+                  <td>Pending</td>
+                </tr>
+              )}
+            </tbody>
           </table>
           <div className="see-more">
             <a href="#">See more</a>

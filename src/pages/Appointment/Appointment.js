@@ -12,15 +12,16 @@ const TodaysAppointments = () => {
 
   const doctor = JSON.parse(localStorage.getItem("doctor"));
   const drId = doctor.id;
-  console.log(drId);
-  const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD format
+
+  // Get today's date in YYYY-MM-DD format (local timezone)
+  const today = new Date().toLocaleDateString("en-CA"); // This gives "YYYY-MM-DD"
 
   // Fetch appointments from API
   const fetchAppointments = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/appointments/dr/${drId}`
+        `https://hospital-management-system-production-17a9.up.railway.app/api/appointments/dr/${drId}`
       );
       if (response.ok) {
         const appointmentData = await response.json();
@@ -28,9 +29,8 @@ const TodaysAppointments = () => {
 
         // Fetch patient data for each appointment
         const patientRequests = appointmentData.map(async (appointment) => {
-          console.log("patient" + appointment.patientId);
           const patientResponse = await fetch(
-            `http://localhost:8080/api/Patients/${appointment.patientId}`
+            `https://hospital-management-system-production-17a9.up.railway.app/api/Patients/${appointment.patientId}`
           );
           if (patientResponse.ok) {
             const patientData = await patientResponse.json();
@@ -59,18 +59,24 @@ const TodaysAppointments = () => {
   // Filter today's appointments
   useEffect(() => {
     if (appointments.length > 0) {
-      const todays = appointments.filter(
-        (appointment) => appointment.date === today
-      );
+      const todays = appointments.filter((appointment) => {
+        // Convert the appointment date to a JavaScript Date object and get the local date
+        const appointmentDate = new Date(appointment.date).toLocaleDateString(
+          "en-CA"
+        ); // "en-CA" ensures YYYY-MM-DD format
+        return appointmentDate === today && appointment.status === "approved";
+      });
       setTodaysAppointments(todays);
 
       // The rest of the appointments
       const rest = appointments.filter(
-        (appointment) => appointment.date !== today
+        (appointment) =>
+          new Date(appointment.date).toLocaleDateString("en-CA") !== today &&
+          appointment.status === "approved"
       );
       setRestAppointments(rest);
     }
-  }, [appointments]);
+  }, [appointments, today]);
 
   const handleAppointmentClick = (appointment) => {
     navigate("/patient-profile", { state: { appointment } });
@@ -98,8 +104,8 @@ const TodaysAppointments = () => {
                 className="appointment-card"
               >
                 <h3>
-                  {appointment.patient?.FirstName}{" "}
-                  {appointment.patient?.LastName}
+                  {appointment.patient?.firstName}{" "}
+                  {appointment.patient?.lastName}
                 </h3>
                 <p>
                   <strong>Date:</strong> {appointment.date}

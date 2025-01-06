@@ -1,0 +1,32 @@
+.nurse-schedule-container {
+    display: flex;
+    min-height: 100vh;
+    margin-left: 20%
+  }
+  
+  .nurse-schedule-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .nurse-schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .nurse-schedule-table th,
+  .nurse-schedule-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .nurse-schedule-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .nurse-schedule-table td {
+    background-color: #f9f9f9;
+  }
+  

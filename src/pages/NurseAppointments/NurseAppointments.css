@@ -1,0 +1,161 @@
+/* Main container for the appointments page */
+.nurse-appointments-container {
+    display: flex;
+    min-height: 100vh;
+    margin-left: 20%
+  }
+  
+  .nurse-appointments-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the appointment table */
+  .nurse-appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Table Header */
+  .nurse-appointments-table th {
+    background-color: #3a7dff;
+    color: white;
+    padding: 12px 20px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .nurse-appointments-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #555;
+  }
+  
+  .nurse-appointments-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light grey for even rows */
+  }
+  
+  /* Hover effect for rows */
+  .nurse-appointments-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Buttons in table */
+  .nurse-appointments-accept-button,
+  .nurse-appointments-decline-button {
+    padding: 8px 16px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Accept button with green color */
+  .nurse-appointments-accept-button {
+    background-color: #28a745;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nurse-appointments-accept-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Decline button with red color */
+  .nurse-appointments-decline-button {
+    background-color: #dc3545;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nurse-appointments-decline-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Styling for patient name button */
+  .nurse-appointments-patient-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .nurse-appointments-patient-button:hover {
+    color: #0056b3;
+    text-decoration: none;
+  }
+  
+  /* Icons */
+  .nurse-appointments-table .accept-icon,
+  .nurse-appointments-table .decline-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+  
+  /* Modal styles */
+  .nurse-appointments-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nurse-appointments-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    overflow-y: auto;
+  }
+  
+  /* Fix modal close button */
+  .nurse-appointments-modal-close {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  /* Fix Profile Picture styling */
+  .patient-profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Makes the picture circular */
+    object-fit: cover; /* Ensures the image fits the circle */
+    margin-bottom: 15px;
+    margin-left: 35%
+  }
+  
+  /* Style for loading text */
+  .nurse-appointments-loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #007bff;
+  }
+  

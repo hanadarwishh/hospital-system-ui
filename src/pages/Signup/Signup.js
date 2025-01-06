@@ -76,6 +76,7 @@ function SignUp() {
 
       const data = await response.json();
       toast.success("Signup successful!");
+      navigate("/dashboard");
 
       // Save user data to localStorage based on role
       localStorage.setItem(
@@ -93,8 +94,12 @@ function SignUp() {
         password: "",
         specialization: "",
       });
-
-      navigate("/nurse-info");
+      if (userData.role == "nurse") {
+        navigate("/nurse-info");
+      }
+      if (userData.role == "patient") {
+        navigate("/patient-dashboard");
+      }
     } catch (err) {
       toast.error(err.message);
     }

@@ -21,6 +21,8 @@ import PatientAppointment from "./pages/PatientAppointment/PatientAppointment.js
 import NurseInfo from "./pages/NurseInformation/NurseInfo.js";
 import NurseDashboard from "./pages/NurseDashboard/NurseDashboard.js";
 import NurseProfile from "./pages/NurseProfile/NurseProfile.js";
+import NurseAppointments from "./pages/NurseAppointments/NurseAppointments.js";
+import NurseSchedule from "./pages/NurseSchedule/NurseSchedule.js";
 
 function App() {
   const location = useLocation(); // Get the current location
@@ -40,6 +42,8 @@ function App() {
     "/nurse-info",
     "/nurse-dashboard",
     "/nurse-profile",
+    "/nurse-appointment",
+    "/nurse-schedule",
   ];
 
   const hideFooterRoutes = [
@@ -56,6 +60,8 @@ function App() {
     "/nurse-info",
     "/nurse-dashboard",
     "/nurse-profile",
+    "/nurse-appointment",
+    "/nurse-schedule",
   ];
 
   return (
@@ -82,6 +88,8 @@ function App() {
         <Route path="/nurse-info" element={<NurseInfo />} />
         <Route path="/nurse-dashboard" element={<NurseDashboard />} />
         <Route path="/nurse-profile" element={<NurseProfile />} />
+        <Route path="/nurse-appointment" element={<NurseAppointments />} />
+        <Route path="/nurse-schedule" element={<NurseSchedule />} />
       </Routes>
       {!hideFooterRoutes.includes(location.pathname) && <Footer />}
     </div>

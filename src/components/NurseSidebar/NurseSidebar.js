@@ -25,7 +25,7 @@ const NurseSidebar = () => {
           Dashboard
         </NavLink>
         <NavLink
-          to="/nurse-appointments"
+          to="/nurse-appointment"
           className={({ isActive }) =>
             `sidebar-link ${isActive ? "active" : ""}`
           }

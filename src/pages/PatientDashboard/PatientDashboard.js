@@ -14,16 +14,10 @@ const PatientDashboard = () => {
   const [activeView, setActiveView] = useState("dashboard");
   const [selectedSpecialization, setSelectedSpecialization] = useState("");
   const [feesRange, setFeesRange] = useState([0, 500]);
-  const [selectedDate, setSelectedDate] = useState(null);
-
+  const [selectedDate, setSelectedDate] = useState(null); // Store selected date
   const navigate = useNavigate();
   const patient = JSON.parse(localStorage.getItem("patient"));
   const patientId = patient.id;
-  //   const [appointmentData, setAppointmentData] = useState({
-  //     issue: "",
-  //     patientId: patientId,
-  //     drId: "",
-  //   });
 
   const commonSpecializations = [
     "Cardiologist",
@@ -45,7 +39,7 @@ const PatientDashboard = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:8080/api/doctors/schedule"
+        "https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule"
       );
       if (response.ok) {
         const schedulesData = await response.json();
@@ -53,7 +47,7 @@ const PatientDashboard = () => {
         const enrichedSchedules = await Promise.all(
           schedulesData.map(async (schedule) => {
             const doctorResponse = await fetch(
-              `http://localhost:8080/api/doctors/${schedule.drId}`
+              `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/${schedule.drId}`
             );
             if (doctorResponse.ok) {
               const doctorDetails = await doctorResponse.json();
@@ -97,6 +91,11 @@ const PatientDashboard = () => {
   };
 
   const handleBookAppointment = async (scheduleId, drId) => {
+    if (!selectedDate) {
+      alert("Please select a date for the appointment.");
+      return;
+    }
+
     const issue = prompt("Please describe your issue before booking:");
     if (!issue) {
       alert("Issue is required to book an appointment.");
@@ -108,16 +107,20 @@ const PatientDashboard = () => {
       patientId,
       drId,
       scheduleId,
+      date: selectedDate, // Send the selected date with the appointment
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/api/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedAppointmentData),
-      });
+      const response = await fetch(
+        `https://hospital-management-system-production-17a9.up.railway.app/api/appointments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedAppointmentData),
+        }
+      );
 
       if (response.ok) {
         alert("Appointment booked successfully!");
@@ -133,16 +136,16 @@ const PatientDashboard = () => {
   };
 
   return (
-    <div className="patient-db-dashboard">
+    <div className="patient-dashboard">
       {/* Integrate Sidebar */}
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
 
-      <div className="patient-db-main-content">
+      <div className="patient-dashboard-main-content">
         {activeView === "dashboard" && (
-          <div className="patient-db-dashboard-content">
+          <div className="patient-dashboard-dashboard-content">
             <h1>Welcome, {userName}</h1>
 
-            <div className="patient-db-filter-section">
+            <div className="patient-dashboard-filter-section">
               <h3>Filter Schedules</h3>
               <label>Specialization:</label>
               <select
@@ -182,31 +185,43 @@ const PatientDashboard = () => {
               />
 
               <label>Select Date:</label>
-              <Calendar value={selectedDate} onChange={setSelectedDate} />
+              <Calendar
+                value={selectedDate}
+                onChange={setSelectedDate}
+                className="patient-dashboard-calendar"
+              />
 
-              <button className="button-pdb" onClick={handleFilters}>
+              <button
+                className="patient-dashboard-button"
+                onClick={handleFilters}
+              >
                 Apply Filters
               </button>
             </div>
 
-            <div className="patient-db-schedule-list">
+            <div className="patient-dashboard-schedule-list">
               <h3>Available Schedules</h3>
-              {loading && <p className="patient-db-loading">Loading...</p>}
+              {loading && (
+                <p className="patient-dashboard-loading">Loading...</p>
+              )}
               {filteredSchedules.length === 0 && !loading && (
-                <p className="patient-db-no-results">
+                <p className="patient-dashboard-no-results">
                   No schedules available. Apply filters to find results.
                 </p>
               )}
-              <div className="patient-db-schedule-cards">
+              <div className="patient-dashboard-schedule-cards">
                 {filteredSchedules.map((schedule) => (
-                  <div key={schedule.id} className="patient-db-schedule-card">
-                    <div className="patient-db-card-header">
+                  <div
+                    key={schedule.id}
+                    className="patient-dashboard-schedule-card"
+                  >
+                    <div className="patient-dashboard-card-header">
                       <img
                         src={schedule.doctor?.profilePicture || "/default.jpg"}
                         alt="Doctor"
-                        className="patient-db-doctor-image"
+                        className="patient-dashboard-doctor-image"
                       />
-                      <div className="patient-db-doctor-details">
+                      <div className="patient-dashboard-doctor-details">
                         <h4>
                           {schedule.doctor
                             ? `${schedule.doctor.FirstName} ${schedule.doctor.LastName}`
@@ -215,7 +230,7 @@ const PatientDashboard = () => {
                         <p>{schedule.doctor?.specialization || "N/A"}</p>
                       </div>
                     </div>
-                    <div className="patient-db-card-body">
+                    <div className="patient-dashboard-card-body">
                       <p>
                         <strong>Fees:</strong> ${schedule.fee}
                       </p>
@@ -233,7 +248,7 @@ const PatientDashboard = () => {
                       onClick={() =>
                         handleBookAppointment(schedule.id, schedule.drId)
                       }
-                      className="patient-db-book-button"
+                      className="patient-dashboard-book-button"
                     >
                       Book Appointment
                     </button>

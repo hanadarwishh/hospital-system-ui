@@ -64,7 +64,9 @@ const MyProfile = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8080/api/nurse`);
+      const response = await fetch(
+        `https://hospital-management-system-production-17a9.up.railway.app/api/nurse`
+      );
       if (response.ok) {
         const data = await response.json();
         setNurses(data);
@@ -86,7 +88,7 @@ const MyProfile = () => {
     try {
       // Update doctor's profile data
       const response = await fetch(
-        `http://localhost:8080/api/doctors/${doctor.id}`,
+        `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/${doctor.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -103,7 +105,7 @@ const MyProfile = () => {
         if (formData.assignedNurse) {
           console.log(formData.assignedNurse);
           const responseAssignedDr = await fetch(
-            `http://localhost:8080/api/nurse/assignedDr/${formData.assignedNurse}`,
+            `https://hospital-management-system-production-17a9.up.railway.app/api/nurse/assignedDr/${formData.assignedNurse}`,
 
             {
               method: "PATCH",

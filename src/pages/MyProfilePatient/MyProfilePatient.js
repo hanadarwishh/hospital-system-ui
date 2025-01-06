@@ -30,7 +30,7 @@ const MyPatientProfile = () => {
     const fetchPatientData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/Patients/${patientId}`
+          `https://hospital-management-system-production-17a9.up.railway.app/api/Patients/${patientId}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -75,7 +75,7 @@ const MyPatientProfile = () => {
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/Patients/${patientId}`,
+        `https://hospital-management-system-production-17a9.up.railway.app/api/Patients/${patientId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

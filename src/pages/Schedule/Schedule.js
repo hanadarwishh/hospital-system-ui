@@ -19,7 +19,7 @@ const DoctorSchedule = () => {
     const fetchSchedule = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/doctors/schedule/dr/${drId}`
+          `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule/dr/${drId}`
         );
         if (response.ok) {
           const fetchedSchedule = await response.json();
@@ -57,7 +57,7 @@ const DoctorSchedule = () => {
   const handleDeleteSchedule = async (scheduleId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/doctors/schedule/${scheduleId}`,
+        `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule/${scheduleId}`,
         {
           method: "DELETE",
         }

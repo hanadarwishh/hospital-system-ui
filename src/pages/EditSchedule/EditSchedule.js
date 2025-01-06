@@ -36,7 +36,7 @@ const EditSchedule = ({ editSchedule, closeModal, setSchedule }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/doctors/schedule/${editSchedule.id}`,
+        `https://hospital-management-system-production-17a9.up.railway.app/api/doctors/schedule/${editSchedule.id}`,
         {
           method: "PATCH",
           headers: {

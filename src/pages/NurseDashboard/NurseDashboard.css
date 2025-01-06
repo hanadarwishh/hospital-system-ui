@@ -1,6 +1,7 @@
 .dashboard-container {
     display: flex;
     height: 100vh;
+    margin-left: 5%
   }
   
   .main-content {
@@ -121,5 +122,22 @@
     color: #999;
     text-align: center;
     margin-top: 15px;
+  }
+  /* Skeleton loader styles */
+.loading-skeleton {
+    background-color: #f0f0f0;
+    height: 20px;
+    width: 100%;
+    margin: 10px 0;
+    animation: shimmer 1.5s infinite linear;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
   }
   
