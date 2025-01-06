@@ -1,8 +1,7 @@
 {
   "name": "hospital-management-system",
   "version": "0.1.0",
-  "homepage": "https://hanadarwishh.github.io/hospital-management-system-ui",
-
+  "homepage": "https://hanadarwishh.github.io/hospital-system-ui/",
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^6.1.6",
@@ -28,8 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-      "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -b dev"
   },
   "eslintConfig": {
     "extends": [
@@ -52,5 +51,4 @@
   "devDependencies": {
     "gh-pages": "^6.3.0"
   }
-  
 }
